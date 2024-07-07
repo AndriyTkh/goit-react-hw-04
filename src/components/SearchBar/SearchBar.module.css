@@ -1,0 +1,25 @@
+.headerBox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #3846ad;
+}
+
+.headForm {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  padding: 8px;
+
+  border-radius: 4px;
+  border: 1px solid darkblue;
+}
+
+.input {
+  border: none;
+  width: 320px;
+  height: 28px;
+
+  padding: 4px 0 4px 28px;
+}
