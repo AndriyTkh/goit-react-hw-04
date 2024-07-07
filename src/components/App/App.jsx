@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Hourglass } from "react-loader-spinner";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
-import axios from "axios";
+import getImgData from "../../unsplash-api";
 
 export default function App() {
   const [pictures, setPictures] = useState([]);
@@ -13,7 +13,9 @@ export default function App() {
       setPictures([]);
       setLoading(true);
 
-      const result = await axios.get();
+      const response = await getImgData(userInput, 1);
+      console.log(response.data);
+      setPictures(response.data);
     } catch (error) {
       console.log(error);
     } finally {
@@ -24,7 +26,7 @@ export default function App() {
   return (
     <>
       <SearchBar onSearch={handleSearch} />
-      {pictures > 0 && <ImageGallery />}
+      {pictures.length > 0 && <ImageGallery pictures={pictures} />}
       {loading && <Hourglass height={"40"} />}
     </>
   );

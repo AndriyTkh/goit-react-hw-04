@@ -12,6 +12,7 @@ export default function SearchBar({ onSearch }) {
     }
 
     onSearch(userSearch);
+
     form.reset();
   };
 
