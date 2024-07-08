@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Hourglass } from "react-loader-spinner";
 import SearchBar from "../SearchBar/SearchBar";
@@ -16,6 +16,12 @@ export default function App() {
   const [page, setPage] = useState(1);
   const [input, setInput] = useState("");
   const [totalHits, setTotalHits] = useState(0);
+
+  useEffect(() => {
+    if (totalHits > page * 15) {
+      setMoreBtn(true);
+    }
+  }, [totalHits, page]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -52,17 +58,6 @@ export default function App() {
       alert(error);
     } finally {
       setLoading(false);
-
-      console.log(totalHits);
-      setTotalHits(20000);
-      console.log(totalHits);
-
-      console.log(page * 15);
-      console.log(totalHits > page * 15);
-      if (totalHits > page * 15) {
-        setMoreBtn(true);
-        console.log("success");
-      }
     }
   };
 
@@ -85,8 +80,11 @@ export default function App() {
       {moreBtn && (
         <LoadMoreBtn
           onClick={() => {
-            setPage(page + 1);
             loadPage(input);
+
+            console.log(input);
+            setInput("lol");
+            console.log(input);
           }}
         />
       )}
