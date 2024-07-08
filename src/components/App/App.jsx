@@ -12,39 +12,84 @@ import css from "./App.module.css";
 export default function App() {
   const [pictures, setPictures] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [moreBtn, setMoreBtn] = useState(true);
+  const [moreBtn, setMoreBtn] = useState(false);
+  const [page, setPage] = useState(1);
+  const [input, setInput] = useState("");
+  const [totalHits, setTotalHits] = useState(0);
 
-  const handleSearch = async (userInput) => {
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    const form = evt.target;
+    const userSearch = form.elements.userSearch.value.trim();
+
+    if (userSearch === "") {
+      alert("Input is empty");
+      return;
+    }
+
+    setPictures([]);
+    loadPage(userSearch);
+    setInput(userSearch);
+    console.log(input);
+
+    form.reset();
+  };
+
+  const loadPage = async (userInput) => {
     try {
-      setPictures([]);
       setLoading(true);
-      setMoreBtn(true);
+      setMoreBtn(false);
+      console.log(page);
 
-      const response = await getImgData(userInput, 1);
-      console.log(response.data.results);
-      setPictures(response.data.results);
+      const response = await getImgData(userInput, page);
+
+      setTotalHits(response.data.total);
+
+      console.log(response.data.total);
+
+      setPictures(pictures.concat(response.data.results));
     } catch (error) {
-      console.log(error);
+      alert(error);
     } finally {
       setLoading(false);
+
+      console.log(totalHits);
+      setTotalHits(20000);
+      console.log(totalHits);
+
+      console.log(page * 15);
+      console.log(totalHits > page * 15);
+      if (totalHits > page * 15) {
+        setMoreBtn(true);
+        console.log("success");
+      }
     }
   };
 
-  const loadMore = () => {};
-
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
+      <SearchBar onSearch={handleSubmit} />
+
       <Modal parentSelector={() => document.querySelector("#root")}>
         <p>Modal Content.</p>
       </Modal>
+
       {pictures.length > 0 && <ImageGallery pictures={pictures} />}
+
       {loading && (
         <div className={css.centered}>
           <Hourglass height={"40"} />
         </div>
       )}
-      {moreBtn && <LoadMoreBtn onClick={loadMore} />}
+
+      {moreBtn && (
+        <LoadMoreBtn
+          onClick={() => {
+            setPage(page + 1);
+            loadPage(input);
+          }}
+        />
+      )}
     </>
   );
 }
