@@ -1,3 +1,4 @@
-.loader {
-  margin: auto;
+.centered {
+  display: flex;
+  justify-content: center;
 }

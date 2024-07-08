@@ -7,7 +7,12 @@ export default function ImageGallery({ pictures }) {
       {pictures.map((pic) => {
         return (
           <li key={pic.id}>
-            <ImageCard src={pic.urls.small} alt={pic.alt_description} />
+            <ImageCard
+              src={pic.urls.small}
+              alt={pic.alt_description}
+              likes={pic.likes}
+              autor={pic.user.first_name}
+            />
           </li>
         );
       })}
