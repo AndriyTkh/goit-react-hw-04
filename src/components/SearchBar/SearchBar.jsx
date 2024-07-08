@@ -27,7 +27,11 @@ export default function SearchBar({ onSearch }) {
           autoFocus
           placeholder="Search images and photos"
         />
-        <button type="submit">Search</button>
+        <button className={css.submitBtn} type="submit">
+          <svg className={css.icon} width="12" height="12">
+            <use href="/src/symbol-defs.svg#icon-search"></use>
+          </svg>
+        </button>
       </form>
     </header>
   );

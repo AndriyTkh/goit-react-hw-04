@@ -1,8 +1,9 @@
 import ImageCard from "../ImageCard/ImageCard";
+import css from "./ImageGallery.module.css";
 
 export default function ImageGallery({ pictures }) {
   return (
-    <ul>
+    <ul className={css.gallery}>
       {pictures.map((pic) => {
         return (
           <li key={pic.id}>

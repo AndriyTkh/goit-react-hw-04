@@ -3,6 +3,7 @@ import { Hourglass } from "react-loader-spinner";
 import SearchBar from "../SearchBar/SearchBar";
 import ImageGallery from "../ImageGallery/ImageGallery";
 import getImgData from "../../unsplash-api";
+import css from "./App.module.css";
 
 export default function App() {
   const [pictures, setPictures] = useState([]);
@@ -27,7 +28,7 @@ export default function App() {
     <>
       <SearchBar onSearch={handleSearch} />
       {pictures.length > 0 && <ImageGallery pictures={pictures} />}
-      {loading && <Hourglass height={"40"} />}
+      {loading && <Hourglass height={"40"} wrapperClass={css.loader} />}
     </>
   );
 }
